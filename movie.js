@@ -204,3 +204,47 @@ function displayMovies(movies) {
 
 // Display all four movies when the page loads
 displayMovies(watchlist);
+
+//DASBOARD STATISTICS
+
+function updateStats() {
+
+  // Calculate the runtime of watched titles
+  const totalRuntime = watchlist.reduce(
+    function(total, movie) {
+      return total + (movie.watched ? movie.runtime : 0);
+    },
+    0
+  );
+
+  // Add all movie ratings together
+  const ratingTotal = watchlist.reduce(
+    function(total, movie) {
+      return total + movie.rating;
+    },
+    0
+  );
+
+  // Calculate the average rating
+  const averageRating = watchlist.length > 0
+    ? ratingTotal / watchlist.length
+    : 0;
+
+  // Count the titles that have not been watched
+  const unwatchedCount = watchlist.reduce(
+    function(count, movie) {
+      return count + (movie.watched === false ? 1 : 0);
+    },
+    0
+  );
+
+  // Display the results in HTML
+  document.querySelector("#totalRuntime").textContent =
+    `${totalRuntime} min`;
+
+  document.querySelector("#averageRating").textContent =
+    `${averageRating.toFixed(1)}/10`;
+
+  document.querySelector("#unwatchedCount").textContent =
+    unwatchedCount;
+}
